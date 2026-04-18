@@ -9,6 +9,7 @@ Este es el sitio web oficial de **Dani Rizos Nail's**, un salón de belleza espe
 - **Catálogo de Servicios:** Página detallada con precios, tiempos estimados y características de cada servicio (Gel semipermanente, Acrílico escultural, Nail art).
 - **Sistema de Reserva por WhatsApp:** Formulario inteligente que genera un mensaje estructurado con emojis para facilitar la comunicación entre la clienta y el salón.
 - **Navegación Inteligente (Scroll Spy):** El menú de navegación resalta automáticamente la sección que el usuario está viendo.
+- **Análisis de Visitas:** Integración con CounterAPI para monitorear la actividad del sitio en tiempo real.
 - **Totalmente Responsivo:** Optimizado para dispositivos móviles, tablets y computadoras de escritorio.
 
 ## 🛠️ Tecnologías Utilizadas
@@ -16,6 +17,7 @@ Este es el sitio web oficial de **Dani Rizos Nail's**, un salón de belleza espe
 - **HTML5:** Estructura semántica para SEO y accesibilidad.
 - **Vanilla CSS3:** Estilizado personalizado con variables, Flexbox, Grid y animaciones fluidas.
 - **JavaScript (Vanilla):** Lógica del carrusel, menú móvil, validación del formulario de reserva y sistema de scroll spy.
+- **CounterAPI:** Sistema de analíticas ligero para el conteo de visitas y métricas del sitio.
 
 ## 📂 Estructura del Proyecto
 
