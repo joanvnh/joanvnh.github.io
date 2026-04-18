@@ -74,8 +74,10 @@ function initBookingForm() {
 
   function formatTime12h(t) {
     if (!t) return '';
-    let [h, m] = t.split(':');
-    h = parseInt(h);
+    // Manejar HH:mm o HH:mm:ss
+    let parts = t.split(':');
+    let h = parseInt(parts[0], 10);
+    let m = parts[1];
     const suffix = h >= 12 ? 'PM' : 'AM';
     h = h % 12 || 12;
     return `${h}:${m} ${suffix}`;
@@ -99,16 +101,13 @@ function initBookingForm() {
   }
 
   form.querySelectorAll('[data-field]').forEach(el => {
-    el.addEventListener('input', () => {
-      fields[el.dataset.field] = el.value;
-      updatePreview();
-    });
-    if (el.dataset.field === 'service') {
-      el.addEventListener('change', () => {
-        fields.service = el.value;
+    // Escuchar múltiples eventos para máxima compatibilidad
+    ['input', 'change'].forEach(evt => {
+      el.addEventListener(evt, () => {
+        fields[el.dataset.field] = el.value;
         updatePreview();
       });
-    }
+    });
   });
 
   form.addEventListener('submit', (e) => {
