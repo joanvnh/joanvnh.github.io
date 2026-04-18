@@ -214,6 +214,18 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 .social-link:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-2px)}
 @media(min-width:768px){.footer .container{flex-direction:row;justify-content:space-between;align-items:center;text-align:left}.footer-brand{flex-direction:row}}
 
+/* ===== VISIT COUNTER ===== */
+.visit-counter {
+  font-size: .7rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  opacity: 0;
+  transition: opacity .5s ease;
+  margin-top: .5rem;
+}
+@media(min-width:768px){ .visit-counter{ margin-top: 0; margin-left: auto; } }
+
 /* ===== WHATSAPP FAB ===== */
 .wa-fab{position:fixed;bottom:1.5rem;right:1.5rem;width:60px;height:60px;border-radius:50%;background:var(--green);display:grid;place-items:center;box-shadow:0 8px 28px rgba(37,211,102,.35);z-index:90;transition:transform var(--transition);animation:fab-pulse 2.5s infinite}
 .wa-fab:hover{transform:scale(1.1)}

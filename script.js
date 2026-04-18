@@ -217,6 +217,30 @@ function initScrollSpy() {
   update();
 }
 
+/* ===== COUNTER API ===== */
+async function initCounter() {
+  const workspace = 'joan-valerio-noa-hernandezs-team-3793';
+  const name = 'visitas-totales';
+  const counterEl = document.getElementById('visit-counter');
+
+  try {
+    // Usamos la API pública para evitar errores de CORS y proteger tu Token
+    const response = await fetch(`https://api.counterapi.dev/v2/${workspace}/${name}/up`);
+    const data = await response.json();
+    const count = data.count !== undefined ? data.count : data.value;
+
+    if (count !== undefined) {
+      if (counterEl) {
+        counterEl.textContent = `${count} visitas`;
+        counterEl.style.opacity = '1';
+      }
+    }
+  } catch (err) {
+    console.error('Error con CounterAPI:', err);
+    if (counterEl) counterEl.style.display = 'none';
+  }
+}
+
 /* ===== INIT ===== */
 document.addEventListener('DOMContentLoaded', () => {
   initCarousel();
@@ -224,4 +248,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initBookingForm();
   initScrollAnimations();
   initScrollSpy();
+  initCounter();
 });
