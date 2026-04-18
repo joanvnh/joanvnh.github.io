@@ -235,3 +235,49 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 /* ===== ANIMATIONS ===== */
 .fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ===== BACK TO TOP FAB ===== */
+.top-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid rgba(138, 77, 91, 0.2);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  z-index: 90;
+  transition: all var(--transition);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  cursor: pointer;
+  padding: 0;
+}
+.top-fab.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.top-fab:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(138, 77, 91, 0.25);
+}
+.top-fab svg {
+  width: 24px;
+  height: 24px;
+}
+@media (max-width: 768px) {
+  .top-fab {
+    width: 45px;
+    height: 45px;
+    bottom: 1rem;
+    left: 1rem;
+  }
+}

@@ -242,6 +242,24 @@ async function initCounter() {
   }
 }
 
+/* ===== BACK TO TOP ===== */
+function initBackToTop() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
 /* ===== INIT ===== */
 document.addEventListener('DOMContentLoaded', () => {
   initCarousel();
@@ -250,4 +268,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initScrollSpy();
   initCounter();
+  initBackToTop();
 });
