@@ -72,7 +72,17 @@ function initBookingForm() {
   const fields = { name: '', phone: '', service: 'Gel semipermanente', date: '', time: '', details: '' };
   const preview = document.getElementById('msg-preview');
 
+  function formatTime12h(t) {
+    if (!t) return '';
+    let [h, m] = t.split(':');
+    h = parseInt(h);
+    const suffix = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return `${h}:${m} ${suffix}`;
+  }
+
   function updatePreview() {
+    const formattedTime = formatTime12h(fields.time);
     const lines = [
       '💅 Hola Dani Rizos, quiero confirmar una cita.',
       '',
@@ -80,7 +90,7 @@ function initBookingForm() {
       `📱 Teléfono: ${fields.phone || ''}`,
       `✨ Servicio: ${fields.service || ''}`,
       `📅 Fecha: ${fields.date || ''}`,
-      `🕐 Hora: ${fields.time || ''}`,
+      `🕐 Hora: ${formattedTime}`,
       `📝 Detalles: ${fields.details || 'Sin detalles adicionales'}`,
       '',
       '🙏 Quedo pendiente de la confirmación. ¡Gracias!'
