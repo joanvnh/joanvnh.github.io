@@ -220,14 +220,15 @@ function initScrollSpy() {
 /* ===== COUNTER API ===== */
 async function initCounter() {
   const workspace = 'joan-valerio-noa-hernandezs-team-3793';
-  const name = 'visitas-totales';
+  const name = 'first-counter-3793';
   const counterEl = document.getElementById('visit-counter');
 
   try {
-    // Usamos la API pública para evitar errores de CORS y proteger tu Token
     const response = await fetch(`https://api.counterapi.dev/v2/${workspace}/${name}/up`);
-    const data = await response.json();
-    const count = data.count !== undefined ? data.count : data.value;
+    const result = await response.json();
+    
+    // En V2 el valor está en result.data.up_count
+    const count = result.data ? result.data.up_count : (result.count || result.value);
 
     if (count !== undefined) {
       if (counterEl) {
