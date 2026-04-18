@@ -116,6 +116,16 @@ function initBookingForm() {
       showToast('Completa nombre, teléfono, fecha y hora antes de continuar.', 'error');
       return;
     }
+    // Enviamos a Google Calendar (en segundo plano)
+    sendToGoogleCalendar({
+      name: fields.name,
+      phone: fields.phone,
+      service: fields.service,
+      date: fields.date,
+      time: fields.time,
+      details: fields.details
+    });
+
     const msg = preview.textContent;
     const url = `https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -226,7 +236,7 @@ async function initCounter() {
   try {
     const response = await fetch(`https://api.counterapi.dev/v2/${workspace}/${name}/up`);
     const result = await response.json();
-    
+
     // En V2 el valor está en result.data.up_count
     const count = result.data ? result.data.up_count : (result.count || result.value);
 
@@ -270,3 +280,29 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounter();
   initBackToTop();
 });
+
+/**
+ * ENVÍO A GOOGLE CALENDAR
+ * Reemplaza 'TU_URL_DE_APPS_SCRIPT' con la URL que obtengas al implementar en Google Apps Script
+ */
+async function sendToGoogleCalendar(data) {
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQhlvC3i2RW9nf6Yfpnw-6ohpCSd9sl_w2CRjtfeMBQ45yufwBduVBM0LFhU-sjhOacw/exec'; // <--- PEGA AQUÍ TU URL
+
+  if (!SCRIPT_URL || SCRIPT_URL === 'TU_URL_DE_APPS_SCRIPT') {
+    console.log('Google Calendar: URL no configurada.');
+    return;
+  }
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      cache: 'no-cache',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    console.log('Cita enviada a Google Calendar');
+  } catch (error) {
+    console.error('Error enviando a Google Calendar:', error);
+  }
+}
