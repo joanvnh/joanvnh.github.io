@@ -1,5 +1,41 @@
-/* ===== CONSTANTS ===== */
 const BUSINESS_WHATSAPP = '5353734528';
+
+/* ===== THEME MANAGEMENT ===== */
+function initTheme() {
+  const toggle = document.getElementById('theme-toggle');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }
+
+  // Initial load
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    setTheme(savedTheme);
+  } else if (prefersDark.matches) {
+    setTheme('dark');
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const isDark = document.body.classList.contains('dark');
+      setTheme(isDark ? 'light' : 'dark');
+    });
+  }
+
+  // Listen for system changes
+  prefersDark.addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      setTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+}
 
 /* ===== CAROUSEL ===== */
 function initCarousel() {
@@ -279,6 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollSpy();
   initCounter();
   initBackToTop();
+  initTheme();
 });
 
 /**
