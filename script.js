@@ -49,17 +49,28 @@ function initCarousel() {
   let current = 0;
   let autoTimer;
 
+  function updateDots() {
+    const index = Math.round(track.scrollLeft / track.offsetWidth);
+    current = index;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
   function goTo(index) {
     if (index < 0) index = slides.length - 1;
     if (index >= slides.length) index = 0;
-    current = index;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    track.scrollTo({
+      left: slides[index].offsetLeft,
+      behavior: 'smooth'
+    });
   }
 
   function startAuto() {
     stopAuto();
-    autoTimer = setInterval(() => goTo(current + 1), 4500);
+    autoTimer = setInterval(() => {
+      let next = current + 1;
+      if (next >= slides.length) next = 0;
+      goTo(next);
+    }, 5000);
   }
 
   function stopAuto() {
@@ -70,16 +81,14 @@ function initCarousel() {
   if (btnNext) btnNext.addEventListener('click', () => { goTo(current + 1); startAuto(); });
   dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); startAuto(); }));
 
-  // Touch / swipe support
-  let touchStartX = 0;
-  track.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; stopAuto(); }, { passive: true });
-  track.addEventListener('touchend', (e) => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
-    startAuto();
-  });
+  track.addEventListener('scroll', () => {
+    updateDots();
+  }, { passive: true });
 
-  goTo(0);
+  // Stop auto on manual scroll/touch
+  track.addEventListener('touchstart', stopAuto, { passive: true });
+  track.addEventListener('mousedown', stopAuto);
+
   startAuto();
 }
 
