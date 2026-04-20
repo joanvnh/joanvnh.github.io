@@ -4,7 +4,7 @@ const BUSINESS_WHATSAPP = '5353734528';
 function initTheme() {
   const toggle = document.getElementById('theme-toggle');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-  
+
   function setTheme(theme) {
     if (theme === 'dark') {
       document.body.classList.add('dark');
@@ -113,7 +113,7 @@ function initMenu() {
   });
 
   overlay.addEventListener('click', () => setMenuState(false));
-  
+
   nav.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => setMenuState(false));
   });
