@@ -385,7 +385,8 @@ document.addEventListener('DOMContentLoaded', () => {
 async function sendToGoogleCalendar(data) {
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQhlvC3i2RW9nf6Yfpnw-6ohpCSd9sl_w2CRjtfeMBQ45yufwBduVBM0LFhU-sjhOacw/exec'; // <--- PEGA AQUÍ TU URL
 
-  if (!SCRIPT_URL || SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbyQhlvC3i2RW9nf6Yfpnw-6ohpCSd9sl_w2CRjtfeMBQ45yufwBduVBM0LFhU-sjhOacw/exec') {
+  // Solo bloqueamos si la URL es genérica o está vacía
+  if (!SCRIPT_URL || SCRIPT_URL.includes('TU_URL_DE_APPS_SCRIPT')) {
     console.log('Google Calendar: URL no configurada.');
     return;
   }
