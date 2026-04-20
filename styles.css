@@ -364,7 +364,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 .gallery-item:hover img{transform:scale(1.05)}
 
 /* Lightbox Modal */
-.lightbox{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.95);display:none;place-items:center;padding:2rem;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);opacity:0;transition:opacity .3s ease}
+.lightbox{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.95);display:none;place-items:center;padding:2rem;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);opacity:0;transition:opacity .3s ease}
 .lightbox.open{display:grid;opacity:1}
 .lightbox-content{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative}
 .lightbox-content img{max-width:min(1000px,95vw);max-height:85vh;width:auto;height:auto;object-fit:contain;border-radius:.75rem;box-shadow:0 25px 70px rgba(0,0,0,.6);transform:scale(.9);transition:transform .4s cubic-bezier(.4,0,.2,1)}

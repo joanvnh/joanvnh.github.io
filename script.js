@@ -99,11 +99,35 @@ function initMenu() {
   const overlay = document.querySelector('.menu-overlay');
   if (!toggle || !nav || !overlay) return;
 
+  let savedScrollY = 0;
+
+  function lockScroll() {
+    savedScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function unlockScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, savedScrollY);
+  }
+
   function setMenuState(isOpen) {
     toggle.classList.toggle('active', isOpen);
     nav.classList.toggle('open', isOpen);
     overlay.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (isOpen) {
+      lockScroll();
+    } else {
+      unlockScroll();
+    }
     toggle.setAttribute('aria-expanded', isOpen);
   }
 
@@ -334,16 +358,36 @@ function initLightbox() {
 
   if (!lightbox || !lightboxImg || !closeBtn) return;
 
+  let savedScrollY = 0;
+
+  function lockScroll() {
+    savedScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function unlockScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, savedScrollY);
+  }
+
   function open(src, alt) {
     lightboxImg.src = src;
     lightboxImg.alt = alt || 'Imagen ampliada';
+    lockScroll();
     lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Prevent scroll
   }
 
   function close() {
     lightbox.classList.remove('open');
-    document.body.style.overflow = '';
+    unlockScroll();
     setTimeout(() => { lightboxImg.src = ''; }, 300); // Clear after transition
   }
 
