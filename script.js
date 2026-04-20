@@ -97,16 +97,26 @@ function initMenu() {
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
   const overlay = document.querySelector('.menu-overlay');
-  if (!toggle) return;
+  if (!toggle || !nav || !overlay) return;
 
-  function close() { nav.classList.remove('open'); overlay.classList.remove('open'); }
+  function setMenuState(isOpen) {
+    toggle.classList.toggle('active', isOpen);
+    nav.classList.toggle('open', isOpen);
+    overlay.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    toggle.setAttribute('aria-expanded', isOpen);
+  }
 
   toggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
-    overlay.classList.toggle('open');
+    const isOpen = nav.classList.contains('open');
+    setMenuState(!isOpen);
   });
-  if (overlay) overlay.addEventListener('click', close);
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+
+  overlay.addEventListener('click', () => setMenuState(false));
+  
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => setMenuState(false));
+  });
 }
 
 /* ===== BOOKING FORM ===== */
