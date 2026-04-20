@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería de Trabajos — Dani Rizos Nail's</title>
+  <meta name="description" content="Explora la galería completa de trabajos de Dani Rizos Nail's. Diseños únicos, arte a mano y elegancia en cada uña.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/xml%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💅</text></svg>">
+</head>
+<body>
+  <div class="page-grain"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="Dani Rizos Nail's - Logo" class="logo-img" width="44" height="44" fetchpriority="high">
+        <span class="logo-text">
+          <strong>Dani Rizos Nail's</strong>
+          <span>Arreglos de uñas</span>
+        </span>
+      </a>
+      <nav class="nav" id="main-nav">
+        <a href="index.html#trabajos">Trabajos</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="galeria.html" class="active">Galería</a>
+        <a href="index.html#reserva" class="nav-cta">Agendar cita</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2" />
+            <path d="M12 20v2" />
+            <path d="m4.93 4.93 1.41 1.41" />
+            <path d="m17.66 17.66 1.41 1.41" />
+            <path d="M2 12h2" />
+            <path d="M20 12h2" />
+            <path d="m6.34 17.66-1.41 1.41" />
+            <path d="m19.07 4.93-1.41 1.41" />
+          </svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
+        </button>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="menu-overlay" id="menu-overlay"></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+      <div class="container fade-up">
+        <p class="section-kicker">Portafolio</p>
+        <h1>Galería de Trabajos</h1>
+        <p>Explora nuestra colección de diseños realizados. Haz clic en cualquier imagen para verla en detalle.</p>
+      </div>
+    </section>
+
+    <!-- GALLERY GRID -->
+    <section class="gallery-section">
+      <div class="container">
+        <div class="gallery-grid fade-up" id="gallery-grid">
+          <!-- Above the fold: Priority loading -->
+          <div class="gallery-item"><img src="img/trabajos/1.jpeg" alt="Trabajo realizado 1 - Dani Rizos Nail's" width="400" height="400" fetchpriority="high" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/2.jpeg" alt="Trabajo realizado 2 - Dani Rizos Nail's" width="400" height="400" fetchpriority="high" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/3.jpeg" alt="Trabajo realizado 3 - Dani Rizos Nail's" width="400" height="400" fetchpriority="high" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/4.jpeg" alt="Trabajo realizado 4 - Dani Rizos Nail's" width="400" height="400" fetchpriority="high" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/5.jpeg" alt="Trabajo realizado 5 - Dani Rizos Nail's" width="400" height="400" fetchpriority="high" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/6.jpeg" alt="Trabajo realizado 6 - Dani Rizos Nail's" width="400" height="400" fetchpriority="high" decoding="async"></div>
+          
+          <!-- Below the fold: Lazy loading -->
+          <div class="gallery-item"><img src="img/trabajos/7.jpeg" alt="Trabajo realizado 7" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/8.jpeg" alt="Trabajo realizado 8" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/9.jpeg" alt="Trabajo realizado 9" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/10.jpeg" alt="Trabajo realizado 10" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/11.jpeg" alt="Trabajo realizado 11" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/12.jpeg" alt="Trabajo realizado 12" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/13.jpeg" alt="Trabajo realizado 13" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/14.jpeg" alt="Trabajo realizado 14" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/15.jpeg" alt="Trabajo realizado 15" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/16.jpeg" alt="Trabajo realizado 16" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/17.jpeg" alt="Trabajo realizado 17" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/18.jpeg" alt="Trabajo realizado 18" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/19.jpeg" alt="Trabajo realizado 19" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/20.jpeg" alt="Trabajo realizado 20" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/21.jpeg" alt="Trabajo realizado 21" width="400" height="400" loading="lazy" decoding="async"></div>
+          <div class="gallery-item"><img src="img/trabajos/22.jpeg" alt="Trabajo realizado 22" width="400" height="400" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-content">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <img src="" alt="Imagen ampliada" id="lightbox-img">
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <section style="padding:3rem 0 4rem;text-align:center">
+      <div class="container fade-up">
+        <h2 class="section-title">¿Viste algo que te encantó?</h2>
+        <p style="margin:1rem auto;color:var(--fg-muted);max-width:480px">Reserva tu espacio ahora y hagamos realidad tu próximo diseño.</p>
+        <a href="index.html#reserva" class="btn-primary" style="margin-top:1rem">
+          Agendar cita ahora
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">
+        <img src="img/logo.png" alt="Dani Rizos Nail's - Logo Footer" class="footer-logo" width="60" height="60" loading="lazy">
+        <p>Dani Rizos Nail's — Arreglos de uñas con estilo y reserva por WhatsApp.</p>
+        <div id="visit-counter" class="visit-counter"></div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Inicio</a> · <a href="servicios.html">Servicios</a> · <a href="index.html#reserva">Reservar</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/danyrizosnails?igsh=b3M0NTV2aDRpaHZn" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <a href="https://maps.app.goo.gl/5pDfaGWXjxzRp7yn8" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Ubicación en Google Maps">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </a>
+        <a href="https://wa.me/5353734528" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" class="top-fab" aria-label="Volver arriba">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m18 15-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
