@@ -8,6 +8,7 @@ Este es el sitio web oficial de **Dani Rizos Nail's**, un salón de belleza espe
 - **Portafolio Interactivo:** Carrusel de imágenes con los trabajos más destacados y categorías.
 - **Catálogo de Servicios:** Página detallada con precios, tiempos estimados y características de cada servicio (Gel semipermanente, Acrílico escultural, Nail art).
 - **Sistema de Reserva por WhatsApp:** Formulario inteligente que genera un mensaje estructurado con emojis para facilitar la comunicación entre la clienta y el salón.
+- **Sincronización con Google Calendar:** Las citas se registran automáticamente en Google Calendar con todos los detalles del cliente, servicio, fecha y hora, facilitando la gestión de horarios.
 - **Navegación Inteligente (Scroll Spy):** El menú de navegación resalta automáticamente la sección que el usuario está viendo.
 - **Análisis de Visitas:** Integración con CounterAPI para monitorear la actividad del sitio en tiempo real.
 - **Totalmente Responsivo:** Optimizado para dispositivos móviles, tablets y computadoras de escritorio.

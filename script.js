@@ -191,8 +191,13 @@ function initBookingForm() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    const phonePattern = /^[56]\d{7}$/;
     if (!fields.name || !fields.phone || !fields.date || !fields.time) {
       showToast('Completa nombre, teléfono, fecha y hora antes de continuar.', 'error');
+      return;
+    }
+    if (!phonePattern.test(fields.phone)) {
+      showToast('El teléfono debe tener 8 dígitos y empezar con 5 o 6. Ejemplo: 56585794', 'error');
       return;
     }
     // Enviamos a Google Calendar (en segundo plano)
