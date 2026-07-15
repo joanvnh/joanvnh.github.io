@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Dani Rizos Nail's</title>
+  <meta name="description" content="Panel administrativo de Dani Rizos Nail's">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+  <style>
+    .admin-section { padding-block: 3rem; min-height: 80vh; }
+    .admin-section .container { max-width: 1100px; }
+
+    /* Login */
+    .login-box {
+      max-width: 420px;
+      margin: 4rem auto;
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .login-box h2 { font-family: var(--serif); font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .login-box p { color: var(--fg-muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .login-box .field-wrap { margin-bottom: 1.2rem; text-align: left; }
+    .login-box .field-input { width: 100%; }
+    .login-error { color: #c0392b; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    .login-info { color: var(--fg-muted); font-size: 0.78rem; margin-top: 1rem; line-height: 1.6; }
+
+    /* Dashboard */
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .admin-header h1 { font-family: var(--serif); font-size: 2rem; }
+    .admin-header .user-email { font-size: 0.8rem; color: var(--fg-muted); }
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      padding: 1.2rem;
+      border-radius: 1.2rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      text-align: center;
+    }
+    .stat-card .num { font-size: 2rem; font-weight: 700; font-family: var(--serif); color: var(--accent); }
+    .stat-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); margin-top: 0.25rem; }
+
+    /* Tabla */
+    .bookings-table-wrap {
+      overflow-x: auto;
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: var(--shadow);
+    }
+    .bookings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .bookings-table th {
+      text-align: left;
+      padding: 1rem 1.2rem;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--accent-light);
+      white-space: nowrap;
+    }
+    .bookings-table td {
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--fg);
+    }
+    .bookings-table tr:last-child td { border-bottom: none; }
+    .bookings-table tr:hover td { background: rgba(138, 77, 91, 0.04); }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-confirmed { background: #d4edda; color: #155724; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+    body.dark .status-pending { background: #5c4a1a; color: #ffe69c; }
+    body.dark .status-confirmed { background: #1a5c32; color: #d4f5e0; }
+    body.dark .status-cancelled { background: #5c1a1a; color: #f5d4d4; }
+
+    .status-select {
+      padding: 0.35rem 0.6rem;
+      border-radius: 0.6rem;
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--fg);
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .status-select:focus { border-color: var(--accent); }
+
+    .no-bookings {
+      text-align: center;
+      padding: 3rem;
+      color: var(--fg-muted);
+    }
+    .no-bookings svg { width: 48px; height: 48px; opacity: 0.3; margin-bottom: 1rem; }
+
+    .btn-logout {
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--fg);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-logout:hover { border-color: #c0392b; color: #c0392b; }
+
+    .admin-loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--fg-muted);
+    }
+    .admin-loading .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .booking-details-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 0.82rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.4rem;
+      transition: all var(--transition);
+    }
+    .booking-details-btn:hover { background: rgba(138, 77, 91, 0.1); }
+
+    @media (max-width: 768px) {
+      .bookings-table th,
+      .bookings-table td { padding: 0.6rem 0.8rem; font-size: 0.72rem; }
+      .admin-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grain"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="Dani Rizos Nail's - Logo" class="logo-img" width="44" height="44">
+        <span class="logo-text">
+          <strong>Panel Admin</strong>
+          <span>Gestión de reservas</span>
+        </span>
+      </a>
+      <nav class="nav" id="main-nav">
+        <a href="index.html">← Volver al sitio</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="admin-section">
+      <div class="container" id="admin-app">
+        <!-- LOGIN VIEW -->
+        <div id="login-view" class="login-box fade-up">
+          <div style="font-size:3rem;margin-bottom:1rem;">🔐</div>
+          <h2>Acceso administrativo</h2>
+          <p>Ingresa con tu usuario de Supabase para gestionar las reservas.</p>
+          <form id="login-form">
+            <div class="field-wrap">
+              <label for="admin-email">Correo electrónico</label>
+              <input id="admin-email" type="email" class="field-input" placeholder="admin@ejemplo.com" autocomplete="email" required>
+            </div>
+            <div class="field-wrap">
+              <label for="admin-pass">Contraseña</label>
+              <input id="admin-pass" type="password" class="field-input" placeholder="••••••••" autocomplete="current-password" required>
+            </div>
+            <p class="login-error" id="login-error">Correo o contraseña incorrectos</p>
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem;">
+              Ingresar
+            </button>
+          </form>
+          <p class="login-info">
+            💡 Primera vez? Crea un usuario en Supabase → Authentication → Users → Add User,<br>
+            luego ingresa aquí con ese correo y contraseña.
+          </p>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboard-view" style="display:none;">
+          <div class="admin-header fade-up">
+            <div>
+              <h1>📋 Reservas</h1>
+              <p style="color:var(--fg-muted);font-size:0.9rem;">Gestiona las citas de tus clientes</p>
+              <span class="user-email" id="user-email"></span>
+            </div>
+            <button id="btn-logout" class="btn-logout">Cerrar sesión</button>
+          </div>
+
+          <div class="admin-stats fade-up" id="admin-stats">
+            <div class="stat-card"><div class="num" id="stat-total">0</div><div class="label">Total reservas</div></div>
+            <div class="stat-card"><div class="num" id="stat-pending">0</div><div class="label">Pendientes</div></div>
+            <div class="stat-card"><div class="num" id="stat-confirmed">0</div><div class="label">Confirmadas</div></div>
+            <div class="stat-card"><div class="num" id="stat-cancelled">0</div><div class="label">Canceladas</div></div>
+          </div>
+
+          <div class="bookings-table-wrap fade-up">
+            <div id="bookings-loading" class="admin-loading">
+              <div class="spinner"></div>
+              <p>Cargando reservas…</p>
+            </div>
+            <div id="bookings-content" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" style="margin-top:auto;">
+    <div class="container">
+      <div class="footer-brand">
+        <img src="img/logo.png" alt="Dani Rizos Nail's - Logo Footer" class="footer-logo" width="60" height="60" loading="lazy">
+        <p>Panel administrativo — Dani Rizos Nail's</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Volver al sitio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="supabase-config.js"></script>
+  <script defer src="script.js?v=1.2"></script>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginView = document.getElementById('login-view');
+      const dashboardView = document.getElementById('dashboard-view');
+      const loginForm = document.getElementById('login-form');
+      const loginError = document.getElementById('login-error');
+      const emailInput = document.getElementById('admin-email');
+      const passInput = document.getElementById('admin-pass');
+      const logoutBtn = document.getElementById('btn-logout');
+      const userEmailSpan = document.getElementById('user-email');
+      const bookingsLoading = document.getElementById('bookings-loading');
+      const bookingsContent = document.getElementById('bookings-content');
+
+      let adminToken = '';
+      let adminEmail = '';
+
+      // Check existing session (stored in sessionStorage)
+      const savedToken = sessionStorage.getItem('admin_token');
+      const savedEmail = sessionStorage.getItem('admin_email');
+      if (savedToken && savedEmail) {
+        adminToken = savedToken;
+        adminEmail = savedEmail;
+        loginView.style.display = 'none';
+        dashboardView.style.display = 'block';
+        userEmailSpan.textContent = `Conectado como ${adminEmail}`;
+        loadBookings();
+      }
+
+      // Login
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const password = passInput.value.trim();
+        if (!email || !password) return;
+
+        loginError.style.display = 'none';
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        submitBtn.textContent = 'Ingresando…';
+        submitBtn.disabled = true;
+
+        try {
+          const result = await supabaseSignIn(email, password);
+
+          if (result && result.access_token) {
+            adminToken = result.access_token;
+            adminEmail = email;
+            sessionStorage.setItem('admin_token', adminToken);
+            sessionStorage.setItem('admin_email', adminEmail);
+            loginView.style.display = 'none';
+            dashboardView.style.display = 'block';
+            userEmailSpan.textContent = `Conectado como ${adminEmail}`;
+            loadBookings();
+          } else {
+            loginError.textContent = 'Correo o contraseña incorrectos';
+            loginError.style.display = 'block';
+            passInput.value = '';
+            passInput.focus();
+          }
+        } catch (err) {
+          loginError.textContent = 'Error de conexión. Verifica que Supabase esté activo.';
+          loginError.style.display = 'block';
+        } finally {
+          submitBtn.textContent = 'Ingresar';
+          submitBtn.disabled = false;
+        }
+      });
+
+      // Logout
+      logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem('admin_token');
+        sessionStorage.removeItem('admin_email');
+        adminToken = '';
+        adminEmail = '';
+        dashboardView.style.display = 'none';
+        loginView.style.display = 'block';
+        emailInput.value = '';
+        passInput.value = '';
+        loginError.style.display = 'none';
+      });
+
+      // Load bookings from Supabase
+      async function loadBookings() {
+        bookingsLoading.style.display = 'block';
+        bookingsContent.style.display = 'none';
+
+        try {
+          const bookings = await supabaseGetBookings(adminToken);
+          renderBookings(bookings);
+        } catch (err) {
+          bookingsLoading.innerHTML = '<p style="color:#c0392b;">Error al cargar reservas. ¿Expiró la sesión?</p>';
+          // Si el token expiró, forzar login de nuevo
+          if (err.message && err.message.includes('401')) {
+            sessionStorage.removeItem('admin_token');
+            sessionStorage.removeItem('admin_email');
+            dashboardView.style.display = 'none';
+            loginView.style.display = 'block';
+            loginError.textContent = 'Sesión expirada. Ingresa nuevamente.';
+            loginError.style.display = 'block';
+          }
+        }
+      }
+
+      // Render bookings table
+      function renderBookings(bookings) {
+        bookingsLoading.style.display = 'none';
+        bookingsContent.style.display = 'block';
+
+        const total = bookings.length;
+        const pending = bookings.filter(b => b.status === 'pending').length;
+        const confirmed = bookings.filter(b => b.status === 'confirmed').length;
+        const cancelled = bookings.filter(b => b.status === 'cancelled').length;
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-pending').textContent = pending;
+        document.getElementById('stat-confirmed').textContent = confirmed;
+        document.getElementById('stat-cancelled').textContent = cancelled;
+
+        if (total === 0) {
+          bookingsContent.innerHTML = `
+            <div class="no-bookings">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <p>No hay reservas registradas todavía.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let html = `<table class="bookings-table"><thead><tr>
+          <th>#</th><th>Fecha</th><th>Hora</th><th>Cliente</th><th>Teléfono</th><th>Servicio</th><th>Detalles</th><th>Estado</th>
+        </tr></thead><tbody>`;
+
+        bookings.forEach((b, i) => {
+          const formattedDate = b.date
+            ? new Date(b.date + 'T12:00:00').toLocaleDateString('es-CU', { day: '2-digit', month: 'short', year: 'numeric' })
+            : '';
+
+          html += `<tr>
+            <td style="color:var(--fg-muted);font-weight:600;">${i + 1}</td>
+            <td><strong>${formattedDate}</strong></td>
+            <td>${b.time ? b.time.substring(0, 5) : ''}</td>
+            <td><strong>${escHtml(b.name)}</strong></td>
+            <td>${escHtml(b.phone)}</td>
+            <td style="max-width:160px;">${escHtml(b.service)}</td>
+            <td style="max-width:160px;font-size:0.78rem;color:var(--fg-muted);">
+              ${b.details && b.details !== 'Sin detalles adicionales'
+                ? `<button class="booking-details-btn" onclick="alert('${escHtml(b.details).replace(/'/g, "\\'")}')">👁 Ver</button>`
+                : '—'}
+            </td>
+            <td>
+              <select class="status-select status-${b.status || 'pending'}" onchange="updateBookingStatus(${b.id}, this.value)">
+                <option value="pending" ${b.status === 'pending' ? 'selected' : ''}>⏳ Pendiente</option>
+                <option value="confirmed" ${b.status === 'confirmed' ? 'selected' : ''}>✅ Confirmada</option>
+                <option value="cancelled" ${b.status === 'cancelled' ? 'selected' : ''}>❌ Cancelada</option>
+              </select>
+            </td>
+          </tr>`;
+        });
+
+        html += '</tbody></table>';
+        bookingsContent.innerHTML = html;
+      }
+
+      function escHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      // Update booking status
+      window.updateBookingStatus = async (id, status) => {
+        try {
+          const result = await supabaseUpdateBookingStatus(id, status, adminToken);
+          if (result !== null || status) {
+            showToast('Estado actualizado ✅', 'success');
+          } else {
+            showToast('Error al actualizar', 'error');
+          }
+        } catch {
+          showToast('Error de conexión', 'error');
+        }
+      };
+    });
+  </script>
+</body>
+</html>

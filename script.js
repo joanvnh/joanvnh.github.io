@@ -200,6 +200,16 @@ function initBookingForm() {
       showToast('El teléfono debe tener 8 dígitos y empezar con 5 o 6. Ejemplo: 56585794', 'error');
       return;
     }
+    // Guardar en Supabase (en segundo plano)
+    saveBooking({
+      name: fields.name,
+      phone: fields.phone,
+      service: fields.service,
+      date: fields.date,
+      time: fields.time,
+      details: fields.details
+    });
+
     // Enviamos a Google Calendar (en segundo plano)
     sendToGoogleCalendar({
       name: fields.name,
@@ -311,28 +321,24 @@ function initScrollSpy() {
   update();
 }
 
-/* ===== COUNTER API ===== */
+/* ===== COUNTER VÍA SUPABASE ===== */
 async function initCounter() {
-  const workspace = 'joan-valerio-noa-hernandezs-team-3793';
-  const name = 'first-counter-3793';
   const counterEl = document.getElementById('visit-counter');
+  if (!counterEl) return;
 
   try {
-    const response = await fetch(`https://api.counterapi.dev/v2/${workspace}/${name}/up`);
-    const result = await response.json();
-
-    // En V2 el valor está en result.data.up_count
-    const count = result.data ? result.data.up_count : (result.count || result.value);
-
-    if (count !== undefined) {
-      if (counterEl) {
-        counterEl.textContent = `${count} visitas`;
-        counterEl.style.opacity = '1';
-      }
+    const count = await incrementVisitCounter();
+    if (count > 0) {
+      counterEl.textContent = `${count} visitas`;
+      counterEl.style.opacity = '1';
     }
   } catch (err) {
-    console.error('Error con CounterAPI:', err);
-    if (counterEl) counterEl.style.display = 'none';
+    console.error('Error con contador:', err);
+    // Fallback: contador local
+    let localCount = parseInt(localStorage.getItem('page_visits') || '0', 10) + 1;
+    localStorage.setItem('page_visits', localCount.toString());
+    counterEl.textContent = `${localCount} visitas`;
+    counterEl.style.opacity = '1';
   }
 }
 
