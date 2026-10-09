@@ -1,0 +1,30 @@
+# .github/workflows/link-check.yml
+# Detector de enlaces rotos para joanvnh.github.io (Dani Rizos Nail's)
+# Revisa los href/src de las 4 páginas HTML en cada push/PR y una vez
+# por semana (lunes 9:00 UTC) para pillar enlaces externos que mueran solos.
+name: Link check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Revisar enlaces en todas las páginas
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # --exclude-mail ignora mailto: ; --no-progress para logs limpios
+          args: "--verbose --no-progress --exclude-mail './**/*.html'"
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
