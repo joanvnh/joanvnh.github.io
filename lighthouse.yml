@@ -1,0 +1,30 @@
+# .github/workflows/lighthouse.yml
+# Auditoría Lighthouse para joanvnh.github.io (Dani Rizos Nail's)
+# Mide performance, accesibilidad, buenas prácticas y SEO del sitio
+# publicado en https://joanvnh.github.io/ en cada push a main y una
+# vez por semana (lunes 10:00 UTC). admin.html se excluye a propósito:
+# es el panel de administración, no una página pública.
+name: Lighthouse
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 10 * * 1"
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Auditar las páginas públicas del sitio
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://joanvnh.github.io/
+            https://joanvnh.github.io/galeria.html
+            https://joanvnh.github.io/servicios.html
+          uploadArtifacts: true
+          temporaryPublicStorage: true
